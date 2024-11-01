@@ -3,10 +3,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master # Despliega cuando hay un push en la rama main
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
@@ -15,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # O la versión que necesites
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -23,8 +28,17 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: withastro/action@v0
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
         with:
-          dist: dist # Directorio de salida que Astro utiliza por defecto
-          branch: gh-pages
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
