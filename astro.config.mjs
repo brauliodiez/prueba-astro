@@ -1,6 +1,7 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/prueba-astro/',
+  site: "https://brauliodiez.github.io",
+  base: "/prueba-astro/",
 });
