@@ -27,3 +27,4 @@ jobs:
         uses: withastro/action@v0
         with:
           dist: dist # Directorio de salida que Astro utiliza por defecto
+          branch: gh-pages
